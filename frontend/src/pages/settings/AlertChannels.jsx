@@ -17,7 +17,7 @@ import {
 	X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { SiDiscord, SiNtfy, SiSlack } from "react-icons/si";
+import { SiDiscord, SiNtfy, SiSlackware } from "react-icons/si";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useToast } from "../../contexts/ToastContext";
@@ -93,7 +93,7 @@ const CHANNEL_TYPES = [
 		label: "Webhook",
 		description: "Generic, Discord, or Slack",
 		icon: Globe,
-		brandIcons: { discord: SiDiscord, slack: SiSlack },
+		brandIcons: { discord: SiDiscord, slack: SiSlackware },
 	},
 	{
 		value: "email",

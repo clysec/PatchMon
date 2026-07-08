@@ -33,7 +33,7 @@ ENV PORT=3000
 CMD ["go", "run", "./cmd/server"]
 
 # Frontend builder stage for production
-FROM dhi.io/node:22-debian13-dev AS frontend-builder
+FROM dhi.io/node:24-debian13-dev AS frontend-builder
 
 WORKDIR /app/frontend
 
