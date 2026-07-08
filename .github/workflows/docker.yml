@@ -20,7 +20,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  HARBOR_REGISTRY: cr.dev.patchmon.cloud
+  ADDITIONAL_REGISTRY: oci.fi
 
 permissions:
   contents: read
@@ -83,8 +83,6 @@ jobs:
     #   "Unrecognized named-value: 'secrets'"
     # at workflow parse time). Evaluating the expression here converts it into
     # a plain string "true"/"false" which step-level `if:` CAN read via env.
-    env:
-      HAS_HARBOR: ${{ secrets.HARBOR_USERNAME != '' && secrets.HARBOR_TOKEN != '' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd
@@ -110,12 +108,11 @@ jobs:
         # contributor PRs from forks). The Harbor push step below also guards
         # on the same env, so the workflow still succeeds — it just doesn't
         # publish to Harbor.
-        if: env.HAS_HARBOR == 'true'
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
         with:
-          registry: ${{ env.HARBOR_REGISTRY }}
-          username: ${{ secrets.HARBOR_USERNAME }}
-          password: ${{ secrets.HARBOR_TOKEN }}
+          registry: ${{ env.ADDITIONAL_REGISTRY }}
+          username: ${{ secrets.OCIFI_USER }}
+          password: ${{ secrets.OCIFI_KEY }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
@@ -143,7 +140,6 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Harbor
         id: meta-harbor
-        if: env.HAS_HARBOR == 'true'
         uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051
         with:
           # Release tag pushes publish to `cr.dev.patchmon.cloud/patchmon-server`.
@@ -151,8 +147,8 @@ jobs:
           # (`cr.dev.patchmon.cloud/pr/patchmon-server`) so production pulls
           # never accidentally resolve to an in-flight build.
           images: |
-            name=${{ env.HARBOR_REGISTRY }}/patchmon-server,enable=${{ github.ref_type == 'tag' }}
-            name=${{ env.HARBOR_REGISTRY }}/pr/patchmon-server,enable=${{ github.ref_type != 'tag' }}
+            name=${{ env.ADDITIONAL_REGISTRY }}/patchmon-server,enable=${{ github.ref_type == 'tag' }}
+            name=${{ env.ADDITIONAL_REGISTRY }}/pr/patchmon-server,enable=${{ github.ref_type != 'tag' }}
           flavor: |
             latest=auto
           tags: |
@@ -190,7 +186,7 @@ jobs:
         # Only run when Harbor credentials are set and metadata-action produced
         # at least one tag. Forks / test repos simply skip this step; GHCR push
         # above still happens.
-        if: env.HAS_HARBOR == 'true' && steps.meta-harbor.outputs.tags != ''
+        if: steps.meta-harbor.outputs.tags != ''
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
         with:
           context: .
@@ -222,15 +218,15 @@ jobs:
 
             Image built and pushed to Harbor:
 
-            - **Image:** `${{ env.HARBOR_REGISTRY }}/pr/patchmon-server:pr-${{ github.event.pull_request.number }}`
-            - **Digest:** `${{ env.HARBOR_REGISTRY }}/pr/patchmon-server@${{ steps.build-harbor.outputs.digest }}`
+            - **Image:** `${{ env.ADDITIONAL_REGISTRY }}/pr/patchmon-server:pr-${{ github.event.pull_request.number }}`
+            - **Digest:** `${{ env.ADDITIONAL_REGISTRY }}/pr/patchmon-server@${{ steps.build-harbor.outputs.digest }}`
 
             Use in your `docker-compose.yml`:
 
             ```yaml
             services:
               patchmon-server:
-                image: ${{ env.HARBOR_REGISTRY }}/pr/patchmon-server:pr-${{ github.event.pull_request.number }}
+                image: ${{ env.ADDITIONAL_REGISTRY }}/pr/patchmon-server:pr-${{ github.event.pull_request.number }}
             ```
 
             Or use the digest for reproducibility:
@@ -238,6 +234,6 @@ jobs:
             ```yaml
             services:
               patchmon-server:
-                image: ${{ env.HARBOR_REGISTRY }}/pr/patchmon-server@${{ steps.build-harbor.outputs.digest }}
+                image: ${{ env.ADDITIONAL_REGISTRY }}/pr/patchmon-server@${{ steps.build-harbor.outputs.digest }}
             ```
 
