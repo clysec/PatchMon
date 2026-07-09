@@ -112,12 +112,12 @@ func (h *SettingsHandler) VersionCurrent(version string) http.HandlerFunc {
 	}
 }
 
-const serverVersionDNS = "server.vcheck.patchmon.net"
+const serverVersionDNS = "server.version.patchmon.clysec.net"
 
 var semverRe = regexp.MustCompile(`^\d+\.\d+\.\d+`)
 
 // VersionCheckUpdates handles GET /version/check-updates (matches Node backend).
-// Fetches latest server version from DNS (server.vcheck.patchmon.net) and returns update info.
+// Fetches latest server version from DNS (server.version.patchmon.clysec.net) and returns update info.
 func (h *SettingsHandler) VersionCheckUpdates(currentVersion string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()

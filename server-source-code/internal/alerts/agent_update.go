@@ -14,7 +14,7 @@ import (
 	"github.com/PatchMon/PatchMon/server-source-code/internal/util"
 )
 
-const agentVersionDNS = "agent.vcheck.patchmon.net"
+const agentVersionDNS = "patchmon-agent-vcheck.xtrn.net"
 
 var agentSemverRe = regexp.MustCompile(`^\d+\.\d+\.\d+`)
 

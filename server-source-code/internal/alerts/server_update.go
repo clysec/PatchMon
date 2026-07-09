@@ -15,7 +15,7 @@ import (
 	"github.com/PatchMon/PatchMon/server-source-code/internal/util"
 )
 
-const serverVersionDNS = "server.vcheck.patchmon.net"
+const serverVersionDNS = "server.version.patchmon.clysec.net"
 
 var semverRe = regexp.MustCompile(`^\d+\.\d+\.\d+`)
 

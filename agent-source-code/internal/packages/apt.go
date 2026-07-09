@@ -90,7 +90,7 @@ func (m *APTManager) GetPackages() []models.Package {
 	go func() {
 		defer wg.Done()
 		m.logger.Debug("Getting upgradable packages...")
-		upgradeCmd := exec.Command(packageManager, "-s", "-o", "Debug::NoLocking=1", "upgrade")
+		upgradeCmd := exec.Command(packageManager, "-s", "-o", "Debug::NoLocking=1", "dist-upgrade")
 		upgradeCmd.Env = append(os.Environ(), "LANG=C")
 		out, err := upgradeCmd.Output()
 		if err != nil {

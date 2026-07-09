@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	agentDNSDomain = "agent.vcheck.patchmon.net"
+	agentDNSDomain = "agent.version.patchmon.clysec.net"
 	agentVersionRe = `(?i)(?:PatchMon Agent v|patchmon-agent v|version )?([0-9]+\.[0-9]+\.[0-9]+)`
 )
 
@@ -28,7 +28,7 @@ const (
 //     also what the server will hand to Windows/FreeBSD/Darwin agents (all
 //     platform binaries are built from the same commit), so it is the
 //     authoritative "latest the agent can receive from this server".
-//   - upstreamVersion: a DNS TXT record at agent.vcheck.patchmon.net, used as a
+//   - upstreamVersion: a DNS TXT record at agent.version.patchmon.clysec.net, used as a
 //     "is there a newer release upstream than this server has" signal for the
 //     admin UI. It is NOT used as the agent's update target because a stale or
 //     unresolvable record used to produce "0.0.0" for agents.
