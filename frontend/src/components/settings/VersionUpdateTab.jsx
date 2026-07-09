@@ -229,7 +229,7 @@ const VersionUpdateTab = () => {
 								</span>
 								<div className="flex items-center gap-2">
 									<a
-										href="https://github.com/PatchMon/PatchMon"
+										href="https://github.com/clysec/PatchMon"
 										target="_blank"
 										rel="noopener noreferrer"
 										className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-mono"

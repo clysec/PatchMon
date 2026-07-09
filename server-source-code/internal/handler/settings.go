@@ -163,7 +163,7 @@ func (h *SettingsHandler) VersionCheckUpdates(currentVersion string) http.Handle
 				"version":     latestVersion,
 				"tagName":     "v" + latestVersion,
 				"publishedAt": nil,
-				"htmlUrl":     "https://github.com/PatchMon/PatchMon/releases/tag/v" + latestVersion,
+				"htmlUrl":     "https://github.com/clysec/PatchMon/releases/tag/v" + latestVersion,
 			}
 
 			// Persist to settings so /version/current shows fresh data (like Node versionUpdateCheck job)

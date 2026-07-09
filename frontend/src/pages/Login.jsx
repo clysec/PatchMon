@@ -210,7 +210,7 @@ const Login = () => {
 				if (shouldFetchFresh) {
 					try {
 						const releaseResponse = await fetch(
-							"https://api.github.com/repos/PatchMon/PatchMon/releases/latest",
+							"https://api.github.com/repos/clysec/PatchMon/releases/latest",
 							{
 								headers: {
 									Accept: "application/vnd.github.v3+json",
@@ -579,7 +579,7 @@ const Login = () => {
 										)}
 
 										<a
-											href="https://github.com/PatchMon/PatchMon/releases/latest"
+											href="https://github.com/clysec/PatchMon/releases/latest"
 											target="_blank"
 											rel="noopener noreferrer"
 											className="inline-flex items-center gap-2 text-sm text-blue-300 hover:text-blue-200 transition-colors font-medium"
