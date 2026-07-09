@@ -2,6 +2,15 @@
 
 # PatchMon
 
+
+## Fork information
+This fork is a branch of the original with some of the pull requests originating from there applied (Alpine support, etc).
+
+This fork is under development, and not considered stable. We have made some modifications to the update checker and workflows, meaning that the checks do not point to the original PatchMon service.
+
+
+
+
 ### Enterprise-grade Linux patch & server management platform
 
 [![Website](https://img.shields.io/badge/Website-patchmon.net-blue?style=for-the-badge)](https://patchmon.net)
